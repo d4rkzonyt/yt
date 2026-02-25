@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D4rkz — Gaming, Tech & Trends</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #FF3131;
+    --red-glow: rgba(255,49,49,0.3);
+    --blue: #00C2FF;
+    --black: #080808;
+    --dark: #111;
+    --card: #161616;
+    --border: #222;
+    --light: #F5F5F5;
+    --muted: #666;
+    --white: #fff;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--light); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 2px; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px;
+    background: rgba(8,8,8,0.88);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 2px; color: var(--white); }
+  .nav-logo span { color: var(--red); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta { background: var(--red); color: var(--white); border: none; padding: 9px 22px; border-radius: 4px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: opacity 0.2s, transform 0.1s; }
+  .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: flex; align-items: center; padding: 100px 40px 60px; position: relative; overflow: hidden; }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 70% 50%, rgba(0,194,255,0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 60% at 20% 80%, rgba(255,49,49,0.08) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,49,49,0.1); border: 1px solid rgba(255,49,49,0.3);
+    color: var(--red); padding: 6px 14px; border-radius: 100px;
+    font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 28px; animation: fadeUp 0.6s ease both;
+  }
+  .hero-tag::before { content:''; width:6px; height:6px; background:var(--red); border-radius:50%; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.4)} }
+  .hero h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(64px,10vw,120px); line-height:0.92; letter-spacing:2px; animation:fadeUp 0.6s 0.1s ease both; }
+  .hero h1 .outline { -webkit-text-stroke:1.5px rgba(255,255,255,0.3); color:transparent; }
+  .hero h1 .accent { color:var(--red); }
+  .hero-sub { margin-top:24px; font-size:16px; color:var(--muted); line-height:1.6; max-width:480px; animation:fadeUp 0.6s 0.2s ease both; }
+  .hero-btns { display:flex; gap:14px; margin-top:36px; flex-wrap:wrap; animation:fadeUp 0.6s 0.3s ease both; }
+  .btn-primary { display:inline-flex; align-items:center; gap:10px; background:var(--red); color:var(--white); padding:14px 28px; border-radius:6px; font-size:14px; font-weight:600; text-decoration:none; transition:transform 0.2s,box-shadow 0.2s; }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 30px var(--red-glow); }
+  .btn-secondary { display:inline-flex; align-items:center; gap:8px; background:transparent; color:var(--light); padding:14px 28px; border-radius:6px; border:1px solid var(--border); font-size:14px; font-weight:500; text-decoration:none; transition:border-color 0.2s,background 0.2s; }
+  .btn-secondary:hover { border-color:#444; background:rgba(255,255,255,0.04); }
+  .hero-stats { display:flex; gap:40px; margin-top:52px; animation:fadeUp 0.6s 0.4s ease both; }
+  .stat-num { font-family:'Bebas Neue',sans-serif; font-size:34px; color:var(--white); line-height:1; }
+  .stat-label { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-top:4px; }
+  .hero-visual { position:absolute; right:0; top:0; bottom:0; width:45%; display:flex; align-items:center; justify-content:center; pointer-events:none; }
+  .hero-ring { width:400px; height:400px; border-radius:50%; border:1px solid rgba(0,194,255,0.15); position:absolute; animation:spin 20s linear infinite; }
+  .hero-ring::before { content:''; position:absolute; top:-3px; left:50%; width:6px; height:6px; background:var(--blue); border-radius:50%; box-shadow:0 0 12px var(--blue); }
+  .hero-ring:nth-child(2) { width:280px;height:280px;border-color:rgba(255,49,49,0.15);animation:spin 14s linear infinite reverse; }
+  .hero-ring:nth-child(2)::before { background:var(--red); box-shadow:0 0 12px var(--red); }
+  .hero-ring:nth-child(3) { width:180px;height:180px;border-color:rgba(255,255,255,0.06);animation:spin 9s linear infinite; }
+  .hero-ring:nth-child(3)::before { display:none; }
+  @keyframes spin { to{transform:rotate(360deg)} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  /* SECTIONS */
+  section { padding: 90px 40px; }
+  .section-label { display:inline-block; font-size:11px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--red); margin-bottom:12px; }
+  .section-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(36px,5vw,56px); letter-spacing:1.5px; line-height:1.05; margin-bottom:14px; }
+  .section-sub { color:var(--muted); font-size:15px; max-width:520px; line-height:1.6; margin-bottom:48px; }
+  .divider { width:100%; height:1px; background:var(--border); }
+
+  /* LEAKS */
+  #leaks { background: var(--dark); }
+  .leaks-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:20px; }
+  .leak-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:24px; transition:border-color 0.2s,transform 0.2s; position:relative; overflow:hidden; }
+  .leak-card::before { content:''; position:absolute; top:0;left:0;right:0; height:2px; }
+  .leak-card.hot::before { background:var(--red); }
+  .leak-card.new::before { background:var(--blue); }
+  .leak-card.trend::before { background:#9B5CFF; }
+  .leak-card:hover { border-color:#333; transform:translateY(-3px); }
+  .leak-badge { display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px; }
+  .badge-hot { background:rgba(255,49,49,0.15); color:var(--red); }
+  .badge-new { background:rgba(0,194,255,0.1); color:var(--blue); }
+  .badge-trend { background:rgba(155,92,255,0.12); color:#9B5CFF; }
+  .leak-card h3 { font-family:'Rajdhani',sans-serif; font-size:19px; font-weight:700; margin-bottom:8px; color:var(--white); }
+  .leak-card p { font-size:13px; color:var(--muted); line-height:1.6; }
+  .leak-meta { display:flex;align-items:center;gap:8px;margin-top:18px;font-size:11px;color:#444; }
+  .leak-meta span { color:#555; }
+
+  /* VIDEOS */
+  #videos { background: var(--black); }
+  .videos-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px; }
+  a.video-card { display:block; text-decoration:none; color:inherit; }
+  .video-card { border-radius:10px; overflow:hidden; background:var(--card); border:1px solid var(--border); transition:transform 0.2s,border-color 0.2s; cursor:pointer; }
+  .video-card:hover { transform:translateY(-4px); border-color:#2a2a2a; }
+  .video-thumb { position:relative; aspect-ratio:16/9; overflow:hidden; }
+  .video-thumb-inner { width:100%; height:100%; display:flex; align-items:center; justify-content:center; position:relative; }
+  .thumb-1 { background:linear-gradient(135deg,#1a0808,#2d1010); }
+  .thumb-2 { background:linear-gradient(135deg,#08101a,#0f1e2d); }
+  .thumb-3 { background:linear-gradient(135deg,#0d0810,#1a1020); }
+  .thumb-4 { background:linear-gradient(135deg,#0a1208,#152010); }
+  .thumb-label { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:2px; opacity:0.25; text-align:center; padding:20px; line-height:1.1; }
+  .play-btn { position:absolute; width:48px;height:48px; background:rgba(255,255,255,0.12); border:2px solid rgba(255,255,255,0.25); border-radius:50%; display:flex;align-items:center;justify-content:center; transition:background 0.2s,transform 0.2s; }
+  .video-card:hover .play-btn { background:var(--red); border-color:var(--red); transform:scale(1.08); }
+  .play-btn svg { width:16px;height:16px;fill:white;margin-left:2px; }
+  .video-duration { position:absolute;bottom:8px;right:10px;background:rgba(0,0,0,0.8);font-size:11px;font-weight:600;padding:2px 6px;border-radius:3px;color:var(--white); }
+  .video-info { padding:16px; }
+  .video-info h4 { font-size:14px;font-weight:600;color:var(--white);margin-bottom:6px;line-height:1.4; }
+  .video-meta { display:flex;gap:12px;font-size:12px;color:var(--muted); }
+
+  /* ANNOUNCEMENTS */
+  #announcements { background:var(--dark); }
+  .announce-list { display:flex;flex-direction:column;gap:16px; }
+  .announce-item { display:flex;gap:20px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px 24px;transition:border-color 0.2s; }
+  .announce-item:hover { border-color:#2a2a2a; }
+  .announce-icon { width:42px;height:42px;flex-shrink:0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px; }
+  .icon-red{background:rgba(255,49,49,0.12)} .icon-blue{background:rgba(0,194,255,0.1)} .icon-purple{background:rgba(155,92,255,0.1)} .icon-green{background:rgba(0,200,120,0.1)}
+  .announce-body h4 { font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;color:var(--white);margin-bottom:5px; }
+  .announce-body p { font-size:13px;color:var(--muted);line-height:1.5; }
+  .announce-date { margin-top:10px;font-size:11px;color:#444;letter-spacing:0.5px; }
+
+  /* DISCORD */
+  #discord { background:linear-gradient(135deg,#0d0d1a 0%,var(--black) 100%); text-align:center; position:relative; overflow:hidden; }
+  #discord::before { content:''; position:absolute;inset:0; background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(88,101,242,0.08) 0%,transparent 70%); }
+  .discord-card { position:relative;z-index:1;display:inline-block;background:var(--card);border:1px solid rgba(88,101,242,0.25);border-radius:16px;padding:52px 60px;max-width:560px;width:100%; }
+  .discord-logo { width:64px;height:64px;background:#5865F2;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:30px; }
+  .discord-card h2 { font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:2px;margin-bottom:12px; }
+  .discord-card p { color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:30px; }
+  .discord-stats { display:flex;justify-content:center;gap:32px;margin-bottom:30px; }
+  .d-stat-num { font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--white); }
+  .d-stat-label { font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px; }
+  .btn-discord { display:inline-flex;align-items:center;gap:10px;background:#5865F2;color:var(--white);padding:14px 30px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:opacity 0.2s,transform 0.2s;box-shadow:0 8px 30px rgba(88,101,242,0.25); }
+  .btn-discord:hover { opacity:0.9;transform:translateY(-2px); }
+
+  /* SUBSCRIBE */
+  #subscribe { background:var(--red);padding:70px 40px;text-align:center;position:relative;overflow:hidden; }
+  #subscribe::before { content:'D4RKZ';position:absolute;font-family:'Bebas Neue',sans-serif;font-size:200px;opacity:0.06;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none; }
+  #subscribe h2 { font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,7vw,80px);letter-spacing:3px;margin-bottom:14px;position:relative; }
+  #subscribe p { font-size:16px;opacity:0.85;margin-bottom:32px;position:relative; }
+  .btn-sub { display:inline-flex;align-items:center;gap:10px;background:var(--white);color:var(--red);padding:16px 36px;border-radius:8px;font-size:15px;font-weight:700;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;position:relative; }
+  .btn-sub:hover { transform:scale(1.04);box-shadow:0 10px 40px rgba(0,0,0,0.3); }
+
+  /* FOOTER */
+  footer { background:var(--dark);border-top:1px solid var(--border);padding:40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px; }
+  .footer-logo { font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px; }
+  .footer-logo span { color:var(--red); }
+  .footer-links { display:flex;gap:24px; }
+  .footer-links a { color:var(--muted);text-decoration:none;font-size:12px;font-weight:500;transition:color 0.2s; }
+  .footer-links a:hover { color:var(--white); }
+  .footer-copy { color:var(--muted);font-size:12px; }
+
+  /* REVEAL */
+  .reveal { opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease; }
+  .reveal.visible { opacity:1;transform:translateY(0); }
+
+  @media(max-width:768px){
+    nav{padding:0 20px} .nav-links{display:none}
+    .hero{padding:90px 20px 60px} .hero-visual{display:none}
+    section{padding:70px 20px} .hero-stats{gap:24px;flex-wrap:wrap}
+    footer{padding:28px 20px;justify-content:center;text-align:center} .footer-links{flex-wrap:wrap;justify-content:center}
+    .discord-card{padding:36px 24px} .discord-stats{gap:20px}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">D4<span>RKZ</span></div>
+  <ul class="nav-links">
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#announcements">News</a></li>
+    <li><a href="#discord">Discord</a></li>
+  </ul>
+  <a href="https://www.youtube.com/@ITs_D4rkzYT" target="_blank" class="nav-cta">Subscribe</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag">🔴 Live & Active</div>
+    <h1>D4RKZ<br><span class="outline">GAMING</span><br><span class="accent">& MORE</span></h1>
+    <p class="hero-sub">Welcome to D4rkz. Gaming sessions, tech breakdowns, and trend coverage — no filler, just what hits.</p>
+    <div class="hero-btns">
+      <a href="https://www.youtube.com/@ITs_D4rkzYT" target="_blank" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+        Subscribe Now
+      </a>
+      <a href="#videos" class="btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Watch Videos
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">131</div><div class="stat-label">Subscribers</div></div>
+      <div><div class="stat-num">55.7K</div><div class="stat-label">Total Views</div></div>
+      <div><div class="stat-num">3.5K</div><div class="stat-label">Monthly Viewers</div></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-ring"></div>
+    <div class="hero-ring"></div>
+    <div class="hero-ring"></div>
+  </div>
+</section>
+
+
+
+<!-- VIDEOS -->
+<section id="videos">
+  <div class="reveal">
+    <div class="section-label">📺 Latest Content</div>
+    <h2 class="section-title">RECENT VIDEOS</h2>
+    <p class="section-sub">All the latest uploads in one place. Gaming, tech reviews, trend content — everything we drop.</p>
+  </div>
+  <div class="videos-grid">
+    <a href="https://youtu.be/9DJzrUbOQgQ?si=p4Onx8RqEgrbqcyR" target="_blank" class="video-card reveal">
+      <div class="video-thumb">
+        <div class="video-thumb-inner" style="background:#000;">
+          <img src="https://img.youtube.com/vi/9DJzrUbOQgQ/maxresdefault.jpg" alt="Video Thumbnail" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+          <div class="play-btn" style="position:absolute;z-index:2;"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="video-duration">4K</div>
+      </div>
+      <div class="video-info">
+        <h4>I Built a FREE Local AI Chrome Extension (No API, No Cloud)</h4>
+        <p style="font-size:12px;color:#555;margin-top:4px;line-height:1.5;">How to install and use LtnWebAssist — a Chrome extension that runs AI locally using Qwen2.5-7B-Instruct. No API key, no subscriptions, no cloud.</p>
+        <div class="video-meta" style="margin-top:8px;"><span>Tech</span><span>4K Quality</span></div>
+      </div>
+    </a>
+    <a href="https://youtube.com/shorts/LP1hPKw8NqQ?si=FtNFDJBNvft2JjgQ" target="_blank" class="video-card reveal">
+      <div class="video-thumb">
+        <div class="video-thumb-inner" style="background:#000;">
+          <img src="https://img.youtube.com/vi/LP1hPKw8NqQ/maxresdefault.jpg" alt="Video Thumbnail" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+          <div class="play-btn" style="position:absolute;z-index:2;"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="video-duration">#Shorts</div>
+      </div>
+      <div class="video-info">
+        <h4>Imagine Loosing With Hack (Rivals)</h4>
+        <p style="font-size:12px;color:#555;margin-top:4px;line-height:1.5;">When hackers still can't win... 💀 Rivals clip.</p>
+        <div class="video-meta" style="margin-top:8px;"><span>Gaming</span><span>Shorts</span></div>
+      </div>
+    </a>
+    <a href="https://youtube.com/shorts/mxO-SfwT3Cg?si=cgSP1bz8G7QPCNNo" target="_blank" class="video-card reveal">
+      <div class="video-thumb">
+        <div class="video-thumb-inner" style="background:#000;">
+          <img src="https://img.youtube.com/vi/mxO-SfwT3Cg/maxresdefault.jpg" alt="Video Thumbnail" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+          <div class="play-btn" style="position:absolute;z-index:2;"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="video-duration">#Shorts</div>
+      </div>
+      <div class="video-info">
+        <h4>Roblox Rant: Why Do They Create Autocorrect 😭✌️</h4>
+        <p style="font-size:12px;color:#555;margin-top:4px;line-height:1.5;">Autocorrect is not a feature anymore — it's an enemy agent living inside our phones.</p>
+        <div class="video-meta" style="margin-top:8px;"><span>Gaming</span><span>Shorts</span></div>
+      </div>
+    </a>
+    <a href="https://youtube.com/shorts/kAJFQxanSyA?si=eTxLE4UltrP4dTVF" target="_blank" class="video-card reveal">
+      <div class="video-thumb">
+        <div class="video-thumb-inner" style="background:#000;">
+          <img src="https://img.youtube.com/vi/kAJFQxanSyA/maxresdefault.jpg" alt="Video Thumbnail" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+          <div class="play-btn" style="position:absolute;z-index:2;"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="video-duration">#Shorts</div>
+      </div>
+      <div class="video-info">
+        <h4>Thank You Guys So Much!! 🙏</h4>
+        <p style="font-size:12px;color:#555;margin-top:4px;line-height:1.5;">Showing love to everyone who's been supporting the channel. You already know what it is. 🔥</p>
+        <div class="video-meta" style="margin-top:8px;"><span>Community</span><span>Shorts</span></div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ANNOUNCEMENTS -->
+<section id="announcements">
+  <div class="reveal">
+    <div class="section-label">📢 Channel News</div>
+    <h2 class="section-title">ANNOUNCEMENTS</h2>
+    <p class="section-sub">Big updates, schedule changes, collabs, giveaways — all the important stuff right here.</p>
+  </div>
+  <div class="announce-list">
+    <div class="announce-item reveal">
+      <div class="announce-icon icon-red">🎁</div>
+      <div class="announce-body">
+        <h4>GIVEAWAY — 10K Subscriber Special</h4>
+        <p>Celebrating the milestone! Entering is free — check the pinned post on our community tab for details.</p>
+        <div class="announce-date">Feb 24, 2026</div>
+      </div>
+    </div>
+    <div class="announce-item reveal">
+      <div class="announce-icon icon-blue">📅</div>
+      <div class="announce-body">
+        <h4>Weekly Posting Starts March 2026!</h4>
+        <p>Starting March, we're dropping videos every week — consistently. Stay subscribed and turn on notifications so you don't miss a thing.</p>
+        <div class="announce-date">Feb 25, 2026</div>
+      </div>
+    </div>
+    <div class="announce-item reveal">
+      <div class="announce-icon icon-purple">🤝</div>
+      <div class="announce-body">
+        <h4>Collab Incoming — Big Creator Announcement</h4>
+        <p>Can't say who yet but it's someone you definitely know. Dropping next week. The video will be crazy.</p>
+        <div class="announce-date">Feb 15, 2026</div>
+      </div>
+    </div>
+    <div class="announce-item reveal">
+      <div class="announce-icon icon-green">✅</div>
+      <div class="announce-body">
+        <h4>Discord Server Is Now Live</h4>
+        <p>The community hub is open. Join to chat, see exclusive posts, and get early access before everyone else.</p>
+        <div class="announce-date">Feb 10, 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCORD -->
+<section id="discord">
+  <div class="discord-card reveal">
+    <div class="discord-logo">💬</div>
+    <h2>JOIN THE DISCORD</h2>
+    <p>Hang out with the D4rkz community. Exclusive channels for gaming sessions, early video access, leaks, and direct chat with me.</p>
+    <div style="display:flex;flex-direction:column;gap:14px;width:100%;margin-bottom:10px;">
+      <a href="https://discord.gg/wDvpBrj4XN" target="_blank" class="btn-discord" style="justify-content:center;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+        📢 Clan & Updates Server
+      </a>
+      <a href="https://discord.gg/bYr4PRBg53" target="_blank" class="btn-discord" style="justify-content:center;background:#E8272A;box-shadow:0 8px 30px rgba(232,39,42,0.25);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+        ⚔️ ZTX Competitive (Rivals Clan)
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SUBSCRIBE -->
+<section id="subscribe">
+  <h2>JOIN THE D4RKZ FAM</h2>
+  <p>Hit subscribe and turn on notifications. New videos every week — gaming, tech & trends.</p>
+  <a href="https://www.youtube.com/@ITs_D4rkzYT" target="_blank" class="btn-sub">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+    Subscribe on YouTube
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">D4<span>RKZ</span></div>
+  <div class="footer-links">
+    <a href="#videos">Videos</a>
+    <a href="#announcements">News</a>
+    <a href="#discord">Discord</a>
+    <a href="https://www.youtube.com/@ITs_D4rkzYT" target="_blank">YouTube</a>
+  </div>
+  <div class="footer-copy">© 2026 D4rkz. All rights reserved.</div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
